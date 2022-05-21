@@ -1,64 +1,498 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Undangan
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Table of Contents
 
-## About Laravel
+## How to Install
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## API Documentations
+Version: 0.1
+* User Object: <user>
+```
+{
+    name: str
+    email: str
+    password: str
+    role: int | default: 2 (optional)
+}
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* Invitation Object: <invitation>
+```
+{
+  id: uint
+  ref: str
+  bride_name: str
+  bride_nickname: str
+  bride_father: str
+  bride_mother: str
+  bride_child_nth: uint
+  bride_photo_url: str
+  groom_name: str
+  groom_nickname: str
+  groom_father: str
+  groom_mother: str
+  groom_child_nth: uint
+  groom_photo_url: str
+  thumbnail_url: str
+  quote: str
+  bride_first: bool | default: true # bride_name & groom_name
+  is_release: bool | default: false
+  created_at: datetime(iso 8601)
+  updated_at: datetime(iso 8601)
+}
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+* Invitation Detail Object: <invitation_detail>
+```
+{
+    cover.event.title: str
+    cover.event.couple_name: str {bride_nickname & groom_nickname}
+    cover.event.date: datetime
+    quote: str
+    couple.groom.name: str
+    couple.groom.child_nth: int
+    couple.groom.parents.name: str {bpknya terus ibunya}
+    couple.bride.name: str
+    couple.bride.child_nth: int
+    couple.bride.parents.name: str {bpknya terus ibunya}
+    events.main.datetime: datetime
+    events.main.location: str
+    events: [<event>]
+}
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* Event <event>
+```
+{
+    title: str
+    datetime: datetime
+    location: str
+}
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* Expression: <expression>
+```
+{
+  id: uint
+  name: str
+  address: str
+  words: str  
+}
+```
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+* Theme Object: <theme>
+```
+{
+  id: uint
+  name: str
+  thumbnail: str
+  code: str
+}
+```
 
-### Premium Partners
+# User
+**POST /register**
+----
+    Create an user
+* **URL Params**  
+  None
+* **Request Body**  
+  ```
+    {
+        <user>
+    }
+  ```
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:**  
+  * **Code:** 201  
+  **Content:**  
+    ```
+    {
+        token: str
+        message: str
+    }
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
+**POST /login**
+----
+    Authenticated an user
+* **URL Params**  
+  None
+* **Request Body**  
+  ```
+    {
+        email: str
+        password: str
+    }
+  ```
+* **Headers**  
+  Content-Type: application/json
+* **Success Response:**  
+  * **Code:** 201  
+  **Content:**  
+    ```
+    {
+        token: str
+        message: str
+    }
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+# Invitation
+**GET /invitations**
+----
+  Returns all invitations in the system.
+* **URL Params**  
+  None
+* **Request Body**  
+  None  
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:**  
+  * **Code:** 200  
+  **Content:**  
+    ```
+    {
+    invitations: [
+            {<invitation>},
+            {<invitation>},
+            {<invitation>}
+            ]
+    }
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**POST /invitations**
+----
+  Create an invitation to the system.
+* **URL Params**  
+  None
+* **Request Body**  
+  ```
+    {
+        <invitation>
+    }
+  ```
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:**  
+  * **Code:** 201  
+  **Content:**  
+    ```
+    {
+        message: str
+    }
+    ```
 
-## Security Vulnerabilities
+**GET /invitations/:ref**
+----
+  Returns the specified invitations.
+* **URL Params**  
+  *Required:* `ref=[str]`
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:** 
+  * **Code:** 200  
+    **Content:**  
+    ```
+    { 
+        "theme": <theme>,
+        "invitation": <invitation_detail>
+    } 
+    ```
+  * **Error Response:**  
+    * **Code:** 404 Not Found  
+    **Content:** `{ error : "Invitation doesn't exist" }`  
+    OR  
+    * **Code:** 401 Unauthorized   
+    **Content:** `{ error : "You are unauthorized to make this request." }`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+**GET /invitations/me**
+----
+  Returns all Invitations associated with the specified user.
+* **URL Params**  
+  None
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:**  
+  * **Code:** 200  
+    **Content:**  
+    ```
+    {
+        invitations: [
+                {<invitations_object>},
+                {<invitations_object>},
+                {<invitations_object>}
+            ]
+    }
+    ```
+  * **Error Response:**  
+    * **Code:** 401  
+    **Content:** `{ error : error : "You are unauthorized to make this request." }`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**PATCH /invitations/:ref**
+----
+  Updates fields on the specified invitation and returns the updated object.
+* **URL Params**  
+  *Required:* `ref=[str]`
+* **Request Body**  
+    ```
+    {
+        partial or full field of <invitation>
+    }
+    ```
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ <invitation> }`  
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ error : "Invitation doesn't exist" }`  
+  OR  
+  * **Code:** 401  
+  **Content:** `{ error : error : "You are unauthorized to make this request." }`
+
+**DELETE /invitations/:ref**
+----
+  Deletes the specified invitation.
+* **URL Params**  
+  *Required:* `ref=[str]`
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:** 
+  * **Code:** 204 
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ error : "Invitation doesn't exist" }`  
+  OR  
+  * **Code:** 401  
+  **Content:** `{ error : error : "You are unauthorized to make this request." }`
+
+# Expressions
+**GET /invitations/:ref/expressions**
+----
+  Returns all expressions from specified invitation.
+* **URL Params**  
+  *Required:* `ref=[str]`
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+* **Success Response:** 
+  * **Code:** 200  
+    **Content:**  
+    ```
+    { 
+        "expressions": [
+            <expression>,
+            <expression>,
+            ...
+        ]
+    } 
+    ```
+  * **Error Response:**  
+    * **Code:** 404 Not Found  
+    **Content:** `{ error : "Invitation doesn't exist" }`  
+    OR  
+    * **Code:** 401 Unauthorized   
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+
+**GET /expressions**
+----
+  Returns all expressions (for admin).
+* **URL Params**  
+  None
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:** 
+  * **Code:** 200  
+    **Content:**  
+    ```
+    { 
+        "expressions": [
+            <expression>,
+            <expression>,
+            ...
+        ]
+    } 
+    ```
+  * **Error Response:**  
+    * **Code:** 404 Not Found  
+    **Content:** `{ error : "Invitation doesn't exist" }`  
+    OR  
+    * **Code:** 401 Unauthorized   
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+
+**POST /invitations/:ref/expressions**
+----
+  Create an expression on the specified invitation.
+* **URL Params**  
+  *Required:* `ref=[str]`
+* **Request Body**  
+  ```
+    {
+        name: str
+        words: str
+        address: str (optional)
+    }
+  ```
+* **Headers**  
+  Content-Type: application/json  
+* **Success Response:** 
+  * **Code:** 200  
+    **Content:**  
+    ```
+    { 
+        message: str
+    } 
+    ```
+
+**DELETE /expressions/:id**
+----
+  Delete expression
+* **URL Params**  
+  *Required:* `id=[int]`
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+* **Success Response:** 
+  * **Code:** 204
+
+
+# Theme
+**GET /themes**
+----
+  Returns all themes in the system.
+* **URL Params**  
+  None
+* **Request Body**  
+  None  
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:**  
+  * **Code:** 200  
+  **Content:**  
+    ```
+    {
+    themes: [
+            {<theme>},
+            {<theme>},
+            {<theme>}
+            ]
+    }
+    ```
+
+**POST /themes**
+----
+  Create an theme to the system.
+* **URL Params**  
+  None
+* **Request Body**  
+  ```
+    {
+        <theme>
+    }
+  ```
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:**  
+  * **Code:** 201  
+  **Content:**  
+    ```
+    {
+        message: str
+    }
+    ```
+
+**GET /themes/:id**
+----
+  Returns the specified themes.
+* **URL Params**  
+  *Required:* `id=[int]`
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:** 
+  * **Code:** 200  
+    **Content:**  
+    ```
+    { 
+        <theme>
+    } 
+    ```
+  * **Error Response:**  
+    * **Code:** 404 Not Found  
+    **Content:** `{ error : "theme doesn't exist" }`  
+    OR  
+    * **Code:** 401 Unauthorized   
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+**PATCH /themes/:id**
+----
+  Updates fields on the specified theme and returns the updated object.
+* **URL Params**  
+  *Required:* `id=[str]`
+* **Request Body**  
+    ```
+    {
+        partial or full field of <theme>
+    }
+    ```
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:** 
+* **Code:** 200  
+  **Content:**  `{ <theme> }`  
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ error : "theme doesn't exist" }`  
+  OR  
+  * **Code:** 401  
+  **Content:** `{ error : "You are unauthorized to make this request." }`
+
+**DELETE /themes/:id**
+----
+  Deletes the specified theme.
+* **URL Params**  
+  *Required:* `id=[int]`
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:** 
+  * **Code:** 204 
+* **Error Response:**  
+  * **Code:** 404  
+  **Content:** `{ error : "User doesn't exist" }`  
+  OR  
+  * **Code:** 401  
+  **Content:** `{ error : "You are unauthorized to make this request." }`
