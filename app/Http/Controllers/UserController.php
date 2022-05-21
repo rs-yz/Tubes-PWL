@@ -45,7 +45,7 @@ class UserController extends Controller
         }
         $new_user = array_merge($validator->validated(), ['password' => bcrypt($request->password)]);
         if(!(Auth::check() && Auth::user()->isAdmin())){
-            $new_user['role'] = 2;
+            $new_user['role'] = User::USER;
         }
         $user = User::create($new_user);
         return response()->json([
