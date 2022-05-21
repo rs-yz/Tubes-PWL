@@ -13,11 +13,11 @@ class CreateCongratulationTable extends Migration
      */
     public function up()
     {
-        Schema::create('congratulation', function (Blueprint $table) {
+        Schema::create('congratulations', function (Blueprint $table) {
             $table->id();
-            $table->char('nama');
-            $table->char('alamat')->nullable();
-            $table->char('pesan');
+            $table->string('nama');
+            $table->string('alamat')->nullable();
+            $table->string('pesan');
             $table->foreignId('invitation_id')->constrained('invitation');
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ class CreateCongratulationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('congratulation');
+        Schema::dropIfExists('congratulations');
     }
 }

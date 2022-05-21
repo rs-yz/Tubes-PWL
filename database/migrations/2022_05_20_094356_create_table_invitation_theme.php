@@ -13,10 +13,10 @@ class CreateTableInvitationTheme extends Migration
      */
     public function up()
     {
-        Schema::create('invitaion_theme', function (Blueprint $table) {
+        Schema::create('invitation_themes', function (Blueprint $table) {
             $table->id();
-            $table->char('nama');
-            $table->char('html_file');
+            $table->string('nama');
+            $table->string('html_file');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateTableInvitationTheme extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invitaion_theme');
+        Schema::dropIfExists('invitation_themes');
     }
 }

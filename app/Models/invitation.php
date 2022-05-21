@@ -9,7 +9,24 @@ class invitation extends Model
 {
     use HasFactory;
 
-    protected $table = 'invitation';
+    protected $table = 'invitations';
+
+    protected $fillable = [
+        'nama_lengkap_pria',
+        'nama_lengkap_wanita',
+        'nama_panggilan_pria',
+        'nama_panggilan_wanita',
+        'nama_lengkap_ayah_pria',
+        'nama_lengkap_ibu_pria',
+        'nama_lengkap_ayah_wanita',
+        'nama_lengkap_ibu_wanita',
+        'anak_ke_pria',
+        'anak_ke_wanita',
+        'alamat_acara',
+        'tanggal_acara',
+        'photo_pria',
+        'photo_wanita'
+    ];
 
     public function congratulations(){
         return $this->hasMany(congratulation::class, 'invitation_id');

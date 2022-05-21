@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignIdToInvitationTable extends Migration
+class AddForeignKeyRoleIdToUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddForeignIdToInvitationTable extends Migration
      */
     public function up()
     {
-        Schema::table('invitations', function (Blueprint $table) {
-            $table->foreignId('invitaion_theme_id')->nullable()->constrained('invitaion_theme');
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('role')->constrained('roles');
         });
     }
 
@@ -25,8 +25,8 @@ class AddForeignIdToInvitationTable extends Migration
      */
     public function down()
     {
-        Schema::table('invitations', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('invitaion_theme_id');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('role');
         });
     }
 }

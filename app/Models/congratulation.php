@@ -9,7 +9,7 @@ class congratulation extends Model
 {
     use HasFactory;
 
-    protected $table = 'congratulation';
+    protected $table = 'congratulations';
 
     public function invitation()
     {

@@ -9,7 +9,7 @@ class invitationTheme extends Model
 {
     use HasFactory;
 
-    protected $table = 'invitaion_theme';
+    protected $table = 'invitation_themes';
 
     public function invitation()
     {
