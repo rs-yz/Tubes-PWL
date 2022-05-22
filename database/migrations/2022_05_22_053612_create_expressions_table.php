@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableInvitationTheme extends Migration
+class CreateExpressionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateTableInvitationTheme extends Migration
      */
     public function up()
     {
-        Schema::create('invitation_themes', function (Blueprint $table) {
+        Schema::create('expressions', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('html_file');
+            $table->string('name');
+            $table->string('address')->nullable();
+            $table->string('words');
+            $table->foreignId('invitation_id')->constrained('invitations')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateTableInvitationTheme extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invitation_themes');
+        Schema::dropIfExists('expressions');
     }
 }

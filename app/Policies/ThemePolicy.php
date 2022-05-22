@@ -3,20 +3,12 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\invitation;
+use App\Models\theme;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class InvitationPolicy
+class ThemePolicy
 {
     use HandlesAuthorization;
-
-
-    public function before(User $user, $ability)
-    {
-        if($user->isAdmin()){
-            return true;
-        }
-    }
 
     /**
      * Determine whether the user can view any models.
@@ -26,19 +18,19 @@ class InvitationPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isAdmin();
+        //
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\invitation  $invitation
+     * @param  \App\Models\theme  $theme
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(?User $user, invitation $invitation)
+    public function view(User $user, theme $theme)
     {
-        return $invitation->is_release === true || optional($user)->id === $invitation->id;
+        //
     }
 
     /**
@@ -49,30 +41,30 @@ class InvitationPolicy
      */
     public function create(User $user)
     {
-        return $user->role()->id === User::USER;
+        return $user->isAdmin();
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\invitation  $invitation
+     * @param  \App\Models\theme  $theme
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, invitation $invitation)
+    public function update(User $user, theme $theme)
     {
-        return $invitation->user()->id === $user->id;
+        return $user->isAdmin();
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\invitation  $invitation
+     * @param  \App\Models\theme  $theme
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, invitation $invitation)
+    public function delete(User $user, theme $theme)
     {
-        return $invitation->user()->id === $user->id;
+        return $user->isAdmin();
     }
 }

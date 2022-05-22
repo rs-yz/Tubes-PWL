@@ -3,10 +3,11 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\congratulation;
+use App\Models\event;
+use App\Models\invitation;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CongratulationPolicy
+class EventPolicy
 {
     use HandlesAuthorization;
 
@@ -26,19 +27,20 @@ class CongratulationPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->isAdmin();
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\congratulation  $congratulation
+     * @param  \App\Models\event  $event
+     * @param  \App\Models\invitation  $invitation
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, congratulation $congratulation)
+    public function view(User $user, event $event)
     {
-        //
+        return $user->id === $event->invitation()->id;
     }
 
     /**
@@ -47,32 +49,32 @@ class CongratulationPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user, invitation  $invitation)
     {
-        //
+        return $user->id === $invitation->id;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\congratulation  $congratulation
+     * @param  \App\Models\event  $event
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, congratulation $congratulation)
+    public function update(User $user, event $event)
     {
-        return $user->isAdmin();
+        return $user->id === $event->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\congratulation  $congratulation
+     * @param  \App\Models\event  $event
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, congratulation $congratulation)
+    public function delete(User $user, event $event)
     {
-        return $user->isAdmin();
+        return $user->id === $event->id;
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreinvitationThemeRequest extends FormRequest
+class StorethemeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class StoreinvitationThemeRequest extends FormRequest
     public function rules()
     {
         return [
-            "nama" => 'required|string',
-            "html_file" => 'filled'
+            "name" => 'required|string',
+            "thumbnail" => 'required|image',
+            "code" => 'string'
         ];
     }
 }

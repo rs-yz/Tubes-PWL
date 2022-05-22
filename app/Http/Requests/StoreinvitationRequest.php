@@ -24,20 +24,25 @@ class StoreinvitationRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama_lengkap_pria' => 'required|regex:/^a-zA-Z.\' $/i',
-            'nama_lengkap_wanita' => 'required|regex:/^a-zA-Z.\' $/i',
-            'nama_panggilan_pria' => 'required|regex:/^a-zA-Z.\' $/i',
-            'nama_panggilan_wanita' => 'required|regex:/^a-zA-Z.\' $/i',
-            'nama_lengkap_ayah_pria' => 'required|regex:/^a-zA-Z.\' $/i',
-            'nama_lengkap_ibu_pria' => 'required|regex:/^a-zA-Z.\' $/i',
-            'nama_lengkap_ayah_wanita' => 'required|regex:/^a-zA-Z.\' $/i',
-            'nama_lengkap_ibu_wanita' => 'required|regex:/^a-zA-Z.\' $/i',
-            'anak_ke_pria' => 'required|integer|min:1',
-            'anak_ke_wanita' => 'required|integer|min:1',
-            'alamat_acara' => 'required|alpha_num', ,
-            'tanggal_acara' => 'required|date|after_or_equal:now',
-            'photo_pria' => 'file',
-            'photo_wanita' => 'file'
+            'ref' => 'required|unique:invitations,ref',
+            'bride_name' => 'required|string',
+            'bride_nickname' => 'required|string',
+            'bride_father' => 'required|string',
+            'bride_mother' => 'required|string',
+            'bride_child_nth' => 'required|integer|min:1',
+            'bride_photo_url' => 'required|image',
+            'groom_name' => 'required|string',
+            'groom_nickname' => 'required|string',
+            'groom_father' => 'required|string',
+            'groom_mother' => 'required|string',
+            'groom_child_nth' => 'required|integer|min:1',
+            'groom_photo_url' => 'required|image',
+            'main_event_datetime' => 'required|date',
+            'main_event_location' => 'required|string',
+            'thumbnail_url' => 'image',
+            'quote' => 'required|string',
+            'bride_first' => 'boolean',
+            'is_release' => 'boolean',
         ];
     }
 }

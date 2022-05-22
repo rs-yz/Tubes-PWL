@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateinvitationThemeRequest extends FormRequest
+class StoreexpressionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class UpdateinvitationThemeRequest extends FormRequest
     public function rules()
     {
         return [
-            "nama" => 'required|string',
-            "html_file" => 'filled'
+            "name" => 'required|string',
+            "address" => 'string',
+            "words" => 'required|string'
         ];
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCongratulationTable extends Migration
+class CreateEventsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateCongratulationTable extends Migration
      */
     public function up()
     {
-        Schema::create('congratulations', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('alamat')->nullable();
-            $table->string('pesan');
-            $table->foreignId('invitation_id')->constrained('invitation');
+            $table->string('title');
+            $table->dateTime('datetime');
+            $table->string('location');
+            $table->foreignId('invitation_id')->constrained('invitations')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateCongratulationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('congratulations');
+        Schema::dropIfExists('events');
     }
 }

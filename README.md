@@ -35,10 +35,10 @@ Version: 0.1
   groom_photo_url: str
   thumbnail_url: str
   quote: str
+  main_event_datetime: datetime
+  main_event_location: str
   bride_first: bool | default: true # bride_name & groom_name
   is_release: bool | default: false
-  created_at: datetime(iso 8601)
-  updated_at: datetime(iso 8601)
 }
 ```
 
@@ -65,6 +65,7 @@ Version: 0.1
 * Event <event>
 ```
 {
+    id: str
     title: str
     datetime: datetime
     location: str
@@ -254,7 +255,7 @@ Version: 0.1
     }
     ```
 * **Headers**  
-  Content-Type: application/json  
+  Content-Type: application/x-www-form-urlencoded  
   Authorization: Bearer `<Auth Token>`
 * **Success Response:** 
 * **Code:** 200  
@@ -496,3 +497,111 @@ Version: 0.1
   OR  
   * **Code:** 401  
   **Content:** `{ error : "You are unauthorized to make this request." }`
+
+# Events
+**GET /invitations/:ref/events**
+----
+  Returns all events from specified invitation.
+* **URL Params**  
+  *Required:* `ref=[str]`
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+* **Success Response:** 
+  * **Code:** 200  
+    **Content:**  
+    ```
+    { 
+        "events": [
+            <event>,
+            <event>,
+            ...
+        ]
+    } 
+    ```
+  * **Error Response:**  
+    * **Code:** 404 Not Found  
+    **Content:** `{ error : "Invitation doesn't exist" }`  
+    OR  
+    * **Code:** 401 Unauthorized   
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+
+**GET /events**
+----
+  Returns all events (for admin).
+* **URL Params**  
+  None
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Success Response:** 
+  * **Code:** 200  
+    **Content:**  
+    ```
+    { 
+        "events": [
+            <event>,
+            <event>,
+            ...
+        ]
+    } 
+    ```
+  * **Error Response:**  
+    * **Code:** 401 Unauthorized   
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+
+**POST /invitations/:ref/events**
+----
+  Create an event on the specified invitation.
+* **URL Params**  
+  *Required:* `ref=[str]`
+* **Request Body**  
+  ```
+    {
+        <event>
+    }
+  ```
+* **Headers**  
+  Content-Type: application/json  
+* **Success Response:** 
+  * **Code:** 200  
+    **Content:**  
+    ```
+    { 
+        message: str
+    } 
+    ```
+
+**PATCH /events/:id**
+----
+  Updates fields on the specified evnet and returns the updated object.
+* **URL Params**  
+  *Required:* `id=[int]`
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+  Authorization: Bearer `<Auth Token>`
+* **Request Body**  
+    ```
+    {
+        partial or full field of <evnt>
+    }
+    ```
+
+**DELETE /events/:id**
+----
+  Delete event
+* **URL Params**  
+  *Required:* `id=[int]`
+* **Request Body**  
+  None
+* **Headers**  
+  Content-Type: application/json  
+* **Success Response:** 
+  * **Code:** 204
