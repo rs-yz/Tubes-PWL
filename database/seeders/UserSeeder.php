@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Carbon\Carbon;
 
 class UserSeeder extends Seeder
 {
@@ -18,7 +20,9 @@ class UserSeeder extends Seeder
             "name" => "admin",
             "email" => "admin@admin.com",
             "password" => bcrypt("admin12"),
-            "role" => 1
+            "role" => User::ADMIN,
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now()
         ]);
     }
 }
