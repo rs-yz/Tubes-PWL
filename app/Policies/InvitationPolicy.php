@@ -49,7 +49,7 @@ class InvitationPolicy
      */
     public function create(User $user)
     {
-        return $user->role()->id === User::USER;
+        return $user->role === User::USER;
     }
 
     /**

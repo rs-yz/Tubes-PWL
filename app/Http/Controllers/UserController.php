@@ -41,7 +41,7 @@ class UserController extends Controller
             'role' => 'exists:roles,id'
         ]);
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json($validator->errors(), 400);
         }
         $new_user = array_merge($validator->validated(), ['password' => bcrypt($request->password)]);
         if(!(Auth::check() && Auth::user()->isAdmin())){
@@ -60,7 +60,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function logout() {
-        auth()->logout();
+        auth()->logout(); 
         return response()->json(['message' => 'User successfully signed out']);
     }
     /**
@@ -90,7 +90,7 @@ class UserController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60 * 100000,
+            'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user()
         ]);
     }
