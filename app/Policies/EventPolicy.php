@@ -38,9 +38,9 @@ class EventPolicy
      * @param  \App\Models\invitation  $invitation
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, event $event)
+    public function view(User $user, event $event, invitation $invitation)
     {
-        return $user->id === $event->invitation()->id;
+        return $user->id === $invitation->user_id;
     }
 
     /**

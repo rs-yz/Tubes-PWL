@@ -18,7 +18,7 @@ class EventController extends Controller
      */
     public function index(invitation $invitation)
     {
-        $this->authorize('view', $invitation);
+        $this->authorize('view', event::class, $invitation);
         $result = $invitation->events;
         return response()->json([
             'events' => $result
