@@ -40,7 +40,11 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $hidden = [
-        'password'
+        'id',
+        'password',
+        'created_at',
+        'updated_at',
+        'role'
     ];
 
     /**
