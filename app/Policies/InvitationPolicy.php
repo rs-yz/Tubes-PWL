@@ -38,7 +38,7 @@ class InvitationPolicy
      */
     public function view(?User $user, invitation $invitation)
     {
-        return $invitation->is_release === true || optional($user)->id === $invitation->id;
+        return $invitation->is_release === true || optional($user)->id === $invitation->user_id;
     }
 
     /**
