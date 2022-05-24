@@ -61,7 +61,7 @@ class InvitationPolicy
      */
     public function update(User $user, invitation $invitation)
     {
-        return $invitation->user()->id === $user->id;
+        return $invitation->user->id === $user->id;
     }
 
     /**

@@ -51,7 +51,7 @@ class EventPolicy
      */
     public function create(User $user, invitation  $invitation)
     {
-        return $user->id === $invitation->id;
+        return $user->id === $invitation->user_id;
     }
 
     /**
@@ -63,7 +63,7 @@ class EventPolicy
      */
     public function update(User $user, event $event)
     {
-        return $user->id === $event->id;
+        return $user->id === $event->invitation->id;
     }
 
     /**
@@ -75,6 +75,6 @@ class EventPolicy
      */
     public function delete(User $user, event $event)
     {
-        return $user->id === $event->id;
+        return $user->id === $event->invitation->id;
     }
 }
